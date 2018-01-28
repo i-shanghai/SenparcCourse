@@ -1,0 +1,12 @@
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\SenparcCourse.Service.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\SenparcCourse.Service.pdb
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Newtonsoft.Json.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Senparc.Weixin.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Senparc.Weixin.MP.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Newtonsoft.Json.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Senparc.Weixin.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Release\Senparc.Weixin.MP.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Release\SenparcCourse.Service.csprojResolveAssemblyReference.cache
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Release\SenparcCourse.Service.csproj.CoreCompileInputs.cache
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Release\SenparcCourse.Service.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Release\SenparcCourse.Service.pdb

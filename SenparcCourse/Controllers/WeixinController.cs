@@ -6,10 +6,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using SenparcCourse.Service;
+using Senparc.Weixin.MP.MvcExtension;
 
 namespace SenparcCourse.Controllers
 {
-    public class WeixinController:Controller
+    public class WeixinController : Controller
     {
         public static readonly string Token = WebConfigurationManager.AppSettings["WeixinToken"];//与微信公众账号后台的Token设置保持一致，区分大小写。
         public static readonly string EncodingAESKey = WebConfigurationManager.AppSettings["WeixinEncodingAESKey"];//与微信公众账号后台的EncodingAESKey设置保持一致，区分大小写。
@@ -40,6 +42,23 @@ namespace SenparcCourse.Controllers
                     "如果你在浏览器中看到这句话，说明此地址可以被作为微信公众账号后台的Url，请注意保持Token一致。");
             }
         }
-        
+
+        /// <summary>
+        /// 处理微信服务器转发过来的消息
+        /// </summary>
+        /// <param name="postModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("Index")]
+        public ActionResult Post(PostModel postModel)
+        {
+            //创建MessageHandler消息处理实例 
+            var messageHander = new CustomMessageHandler(Request.InputStream, postModel);
+            //执行消息处理
+            messageHander.Execute();
+            //返回消息
+            //return Content(messageHander.FinalResponseDocument.ToString());
+            return new FixWeixinBugWeixinResult(messageHander); 
+        }
     }
 }

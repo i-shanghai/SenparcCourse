@@ -53,3 +53,5 @@ G:\Senparc\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.MP.dll
 G:\Senparc\SenparcCourse\SenparcCourse\bin\SenparcCourse.Service.pdb
 G:\Senparc\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.xml
 G:\Senparc\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.MP.xml
+G:\Senparc\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.MP.MvcExtension.dll
+G:\Senparc\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.MP.MvcExtension.xml

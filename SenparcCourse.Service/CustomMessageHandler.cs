@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml.Linq;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP.AppStore;
+using Senparc.Weixin.Helpers.Extensions;
 
 namespace SenparcCourse.Service
 {
@@ -27,6 +28,31 @@ namespace SenparcCourse.Service
 
         public CustomMessageHandler(RequestMessageBase requestMessageBase, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(requestMessageBase, postModel, maxRecordCount, developerInfo)
         {
+        }
+
+        /// <summary>
+        /// 返回地理位置
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
+        public override IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage)
+        {
+            var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
+            responseMessage.Content = "您发送的是：Lat-{0},Lon-{1}".FormatWith(requestMessage.Location_X.ToString(), requestMessage.Location_Y.ToString()); 
+            return responseMessage;
+        }
+
+
+        /// <summary>
+        /// 返回用户发送的消息
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
+        public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
+        {
+            var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
+            responseMessage.Content = "您发送的是：" + requestMessage.Content.ToString();
+            return responseMessage;
         }
 
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
