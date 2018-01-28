@@ -30,6 +30,37 @@ namespace SenparcCourse.Service
         {
         }
 
+        public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
+        {
+
+            if (requestMessage.EventKey == "KONG")
+            {
+                //return null;
+                return new ResponseMessageNoResponse(); //不返回任何消息
+            }
+            else if (requestMessage.EventKey == "NEWS")
+            {
+                var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageNews>();
+                var articleNew = new Article()
+                {
+                    Title = "图文消息",
+                    PicUrl = "http://sdk.weixin.senparc.com/images/book-cover-front-small-3d-transparent.png",
+                    Url = "http://www.baidu.com",
+                    Description = "这是一篇文章\r\n换行了\r\n哈哈",
+                };
+                responseMessage.Articles.Add(articleNew);
+                return responseMessage;
+            }
+            else
+            {
+                var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
+                responseMessage.Content = "您点击了按钮：" + requestMessage.EventKey;
+                return responseMessage;
+            }
+
+        }
+
+
         /// <summary>
         /// 返回地理位置
         /// </summary>
@@ -38,7 +69,7 @@ namespace SenparcCourse.Service
         public override IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage)
         {
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "您发送的是：Lat-{0},Lon-{1}".FormatWith(requestMessage.Location_X.ToString(), requestMessage.Location_Y.ToString()); 
+            responseMessage.Content = "您发送的是：Lat-{0},Lon-{1}".FormatWith(requestMessage.Location_X.ToString(), requestMessage.Location_Y.ToString());
             return responseMessage;
         }
 
@@ -56,7 +87,7 @@ namespace SenparcCourse.Service
         }
 
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
-        { 
+        {
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
             responseMessage.Content = "当前服务器时间：" + DateTime.Now;
             return responseMessage;

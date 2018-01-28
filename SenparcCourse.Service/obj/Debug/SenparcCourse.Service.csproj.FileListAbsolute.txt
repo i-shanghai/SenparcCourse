@@ -9,4 +9,3 @@ G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.xml
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csproj.CoreCompileInputs.cache
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.dll
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.pdb
-G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csprojResolveAssemblyReference.cache
