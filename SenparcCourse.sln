@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenparcCourse", "SenparcCou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenparcCourse.Tests", "SenparcCourse.Tests\SenparcCourse.Tests.csproj", "{98AAD978-5E94-4152-B5F4-5D8B640F5F05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenparcCourse.Service", "SenparcCourse.Service\SenparcCourse.Service.csproj", "{0816F685-FEBF-4B73-BA81-907B4592491D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{98AAD978-5E94-4152-B5F4-5D8B640F5F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98AAD978-5E94-4152-B5F4-5D8B640F5F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98AAD978-5E94-4152-B5F4-5D8B640F5F05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0816F685-FEBF-4B73-BA81-907B4592491D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0816F685-FEBF-4B73-BA81-907B4592491D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0816F685-FEBF-4B73-BA81-907B4592491D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0816F685-FEBF-4B73-BA81-907B4592491D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

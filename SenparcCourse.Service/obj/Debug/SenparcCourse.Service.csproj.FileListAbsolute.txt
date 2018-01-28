@@ -1,0 +1,11 @@
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\SenparcCourse.Service.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\SenparcCourse.Service.pdb
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Newtonsoft.Json.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Newtonsoft.Json.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.xml
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csproj.CoreCompileInputs.cache
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.dll
+G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.pdb
