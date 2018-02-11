@@ -52,12 +52,27 @@ namespace SenparcCourse.Service
                 return responseMessage;
             }
             else
-            {
+            { 
                 var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
                 responseMessage.Content = "您点击了按钮：" + requestMessage.EventKey;
-                return responseMessage;
-            }
 
+                var storageModel = CurrentMessageContext.StorageData as StorageModel;
+                if (storageModel != null)
+                {
+                    if (storageModel.IsInCmd)
+                    {
+                        storageModel.CmdCount += 1;
+                        responseMessage.Content = responseMessage.Content + "\r\n进入CMD状态:"+ storageModel.CmdCount.ToString();
+                    }
+                    else
+                    {
+                        responseMessage.Content = responseMessage.Content + "\r\n退出CMD状态";
+                    }
+                  
+                }
+
+                return responseMessage;
+            } 
         }
 
 
@@ -83,6 +98,24 @@ namespace SenparcCourse.Service
         {
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
             responseMessage.Content = "您发送的是：" + requestMessage.Content.ToString();
+
+            //输入cmd 进入cmd状态 ， exit退出cmd状态 
+            if (requestMessage.Content == "cmd")
+            {
+                CurrentMessageContext.StorageData = new StorageModel()
+                {
+                    IsInCmd = true
+                };
+            }
+            if (requestMessage.Content == "exit")
+            {
+                var storageModel = CurrentMessageContext.StorageData as StorageModel;
+                if (storageModel != null)
+                {
+                    storageModel.IsInCmd = false;
+                }
+            }
+
             return responseMessage;
         }
 

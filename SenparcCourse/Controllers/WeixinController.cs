@@ -53,12 +53,12 @@ namespace SenparcCourse.Controllers
         public ActionResult Post(PostModel postModel)
         {
             //创建MessageHandler消息处理实例 
-            var messageHander = new CustomMessageHandler(Request.InputStream, postModel);
+            var messageHander = new CustomMessageHandler(Request.InputStream, postModel, 10);
             //执行消息处理
             messageHander.Execute();
             //返回消息
             //return Content(messageHander.FinalResponseDocument.ToString());
-            return new FixWeixinBugWeixinResult(messageHander); 
+            return new FixWeixinBugWeixinResult(messageHander);
         }
     }
 }
