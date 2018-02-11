@@ -63,6 +63,7 @@ namespace SenparcCourse.Service
                     {
                         storageModel.CmdCount += 1;
                         responseMessage.Content = responseMessage.Content + "\r\n进入CMD状态:"+ storageModel.CmdCount.ToString();
+                        responseMessage.Content += "\r\n上一条请求消息的类型:"+CurrentMessageContext.RequestMessages.Last().MsgType;//上一条请求消息的类型
                     }
                     else
                     {
