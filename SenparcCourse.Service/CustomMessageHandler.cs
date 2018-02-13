@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Senparc.Weixin.MP;
-using Senparc.Weixin.MP.Entities;
-using Senparc.Weixin.MP.MessageHandlers;
-using Senparc.Weixin.MP.Helpers;
-using System.IO;
-using System.Xml.Linq;
-using Senparc.Weixin.Entities.Request;
-using Senparc.Weixin.MP.Entities.Request;
-using Senparc.Weixin.MP.AppStore;
+﻿using Senparc.Weixin.Entities.Request;
 using Senparc.Weixin.Helpers.Extensions;
+using Senparc.Weixin.MP.AppStore;
+using Senparc.Weixin.MP.Entities;
+using Senparc.Weixin.MP.Entities.Request;
+using Senparc.Weixin.MP.Helpers;
+using Senparc.Weixin.MP.MessageHandlers;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace SenparcCourse.Service
 {
@@ -20,8 +17,6 @@ namespace SenparcCourse.Service
     {
         public CustomMessageHandler(Stream inputStream, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(inputStream, postModel, maxRecordCount, developerInfo)
         {
-            //StorageModel 有效时间 10分钟 
-            base.CurrentMessageContext.ExpireMinutes = 10;
         }
 
         public CustomMessageHandler(XDocument requestDocument, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(requestDocument, postModel, maxRecordCount, developerInfo)
@@ -54,7 +49,7 @@ namespace SenparcCourse.Service
                 return responseMessage;
             }
             else
-            { 
+            {
                 var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
                 responseMessage.Content = "您点击了按钮：" + requestMessage.EventKey;
 
@@ -64,19 +59,19 @@ namespace SenparcCourse.Service
                 {
                     if (storageModel.IsInCmd)
                     {
-                        storageModel.CmdCount += 1;
-                        responseMessage.Content = responseMessage.Content + "\r\n进入CMD状态:"+ storageModel.CmdCount.ToString();
-                        responseMessage.Content += "\r\n上一条请求消息的类型:"+CurrentMessageContext.RequestMessages.Last().MsgType;//上一条请求消息的类型
+                        //storageModel.CmdCount += 1;
+                        responseMessage.Content = responseMessage.Content + "\r\n进入CMD状态.";//+ storageModel.CmdCount.ToString()
+                        responseMessage.Content += "\r\n上一条请求消息的类型:" + CurrentMessageContext.RequestMessages.Last().MsgType;//上一条请求消息的类型
                     }
                     else
                     {
                         responseMessage.Content = responseMessage.Content + "\r\n退出CMD状态";
                     }
-                  
+
                 }
 
                 return responseMessage;
-            } 
+            }
         }
 
 
@@ -88,20 +83,19 @@ namespace SenparcCourse.Service
         public override IResponseMessageBase OnLocationRequest(RequestMessageLocation requestMessage)
         {
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "您发送的是：Lat-{0},Lon-{1}".FormatWith(requestMessage.Location_X.ToString(), requestMessage.Location_Y.ToString());
+            responseMessage.Content = "您发送的是：Lat-{0},Lon-{1}".FormatWith(requestMessage.Location_X.ToString(CultureInfo.CurrentCulture), requestMessage.Location_Y.ToString(CultureInfo.CurrentCulture));
             return responseMessage;
         }
 
 
         /// <summary>
-        /// 返回用户发送的消息
+        /// 根据用户发送的消息，返回消息
         /// </summary>
         /// <param name="requestMessage"></param>
         /// <returns></returns>
         public override IResponseMessageBase OnTextRequest(RequestMessageText requestMessage)
         {
-            var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "您发送的是：" + requestMessage.Content.ToString();
+            //IResponseMessageBase responseMessage = null;
 
             ////输入cmd 进入cmd状态 ， exit退出cmd状态 
             //if (requestMessage.Content == "cmd")
@@ -120,28 +114,130 @@ namespace SenparcCourse.Service
             //    }
             //}
 
-            //根据关键字回复不同消息
-            var handler = requestMessage.StartHandler(false)
+            //根据关键字、正则表达式，返回不同的消息内容
+            RequestMessageTextKeywordHandler handler = requestMessage.StartHandler()
                 .Keyword("cmd", () =>
                 {
-                    CurrentMessageContext.StorageData=new StorageModel()
+                    var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
+
+                    CurrentMessageContext.StorageData = new StorageModel()
                     {
                         IsInCmd = true
                     };
-                    responseMessage.Content += "\r\n您已进入cmd模式";
-                    return responseMessage; 
-                }).Keywords(new[]{ "exit" ,"close", "quit" }, () =>
+                    responseMessageText.Content += "\r\n您已进入cmd模式";
+
+                    return responseMessageText;
+
+                }).Keywords(new[] { "exit", "close", "quit" }, () =>
+                 {
+                     var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
+
+                     CurrentMessageContext.StorageData = new StorageModel()
+                     {
+                         IsInCmd = false
+                     };
+                     responseMessageText.Content += "\r\n您已退出cmd模式";
+
+                     return responseMessageText;
+
+                 }).Regex(@"^http", () =>
+                 {
+                     var responseMessageNews = requestMessage.CreateResponseMessage<ResponseMessageNews>();
+                     var articleNew = new Article()
+                     {
+                         Title = "您输入了" + requestMessage.Content,
+                         PicUrl = "http://sdk.weixin.senparc.com/images/book-cover-front-small-3d-transparent.png",
+                         Url = "http://www.baidu.com",
+                         Description = "这是一篇文章\r\n换行了\r\n哈哈",
+                     };
+                     responseMessageNews.Articles.Add(articleNew);
+
+                     return responseMessageNews;
+                 }).Default(() =>
                 {
-                    CurrentMessageContext.StorageData = new StorageModel()
-                    {
-                        IsInCmd = false
-                    };
-                    responseMessage.Content += "\r\n您已退出cmd模式";
-                    return responseMessage;
+                    var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
+                    responseMessageText.Content = "这是一条默认的消息回复";
+                    return responseMessageText;
                 });
 
-            return responseMessage; 
+            //如果输入的是文字，再回复中添加输入的文字 
+            var responseMessage = handler.ResponseMessage;
+            if (responseMessage is ResponseMessageText)
+            {
+                var storageModel = CurrentMessageContext.StorageData as StorageModel;
+                if (storageModel != null)
+                {
+                    requestMessage.Content += "\r\nCount:" + storageModel.CmdCount.ToString();
+                }
+
+                (responseMessage as ResponseMessageText).Content += "\r\n您输入了：" + requestMessage.Content;
+            }
+
+            //返回内容转为基类
+            return responseMessage as IResponseMessageBase;
         }
+
+        /// <summary>
+        /// 文本消息或者点击事件消息
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
+        public override IResponseMessageBase OnTextOrEventRequest(RequestMessageText requestMessage)
+        {
+            if (requestMessage.Content == "123")
+            {
+                //创建回复消息对象
+                var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
+                responseMessageText.Content = "进入OnTextOrEventRequest，并返回消息.\r\n您输入的是" + requestMessage.Content;
+                return responseMessageText;
+            }
+
+            return base.OnTextOrEventRequest(requestMessage);
+        }
+
+        /// <summary>
+        /// 处理请求消息之前,统一处理事件
+        /// 此处的业务逻辑处理：根据用户的WeixinOpenId提示，提醒用户操作
+        /// 处理敏感词
+        /// </summary>
+        public override void OnExecuting()
+        {
+            if (CurrentMessageContext.StorageData is StorageModel storageModel && storageModel.IsInCmd)
+            {
+                storageModel.CmdCount++;
+
+                //接收到第5条消息的时候 提示重复
+                if (storageModel.CmdCount >= 5)
+                {
+                    //使用全局的RequestMessage 和 ResponseMessage
+                    var responseMessageText = RequestMessage.CreateResponseMessage<ResponseMessageText>();
+                    responseMessageText.Content = WeixinOpenId + " 您已经发送超过5条消息，请您10分钟以后再试";
+                    ResponseMessage = responseMessageText;
+
+                    //取消后续的关键字匹配执行
+                    CancelExcute = true;
+                }
+            }
+            //继续执行
+            base.OnExecuting();
+        }
+
+        /// <summary>
+        /// 业务上适用于添加消息签名，或者消息过滤处理
+        /// </summary>
+        public override void OnExecuted()
+        {
+            if (ResponseMessage is ResponseMessageText)
+            {
+                ((ResponseMessageText)ResponseMessage).Content += "\r\n【消息签名】";
+
+                //开队列或者线程，处理数据库相当问题
+
+            }
+
+            base.OnExecuted();
+        }
+
 
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
         {
