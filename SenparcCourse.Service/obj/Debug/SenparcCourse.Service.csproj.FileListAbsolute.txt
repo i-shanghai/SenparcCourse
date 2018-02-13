@@ -10,3 +10,15 @@ G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.c
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.dll
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.pdb
 G:\Senparc\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csprojResolveAssemblyReference.cache
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\SenparcCourse.Service.dll
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\SenparcCourse.Service.pdb
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Newtonsoft.Json.dll
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.dll
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.dll
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Newtonsoft.Json.xml
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.xml
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.xml
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csprojResolveAssemblyReference.cache
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csproj.CoreCompileInputs.cache
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.dll
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.pdb

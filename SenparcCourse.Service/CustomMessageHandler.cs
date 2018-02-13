@@ -9,6 +9,7 @@ using Senparc.Weixin.MP.MessageHandlers;
 using Senparc.Weixin.MP.Helpers;
 using System.IO;
 using System.Xml.Linq;
+using Senparc.Weixin.Entities.Request;
 using Senparc.Weixin.MP.Entities.Request;
 using Senparc.Weixin.MP.AppStore;
 using Senparc.Weixin.Helpers.Extensions;
@@ -19,6 +20,7 @@ namespace SenparcCourse.Service
     {
         public CustomMessageHandler(Stream inputStream, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(inputStream, postModel, maxRecordCount, developerInfo)
         {
+            //StorageModel 有效时间 10分钟 
             base.CurrentMessageContext.ExpireMinutes = 10;
         }
 
@@ -56,6 +58,7 @@ namespace SenparcCourse.Service
                 var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
                 responseMessage.Content = "您点击了按钮：" + requestMessage.EventKey;
 
+                //根据是否进入 CMD状态，返回信息
                 var storageModel = CurrentMessageContext.StorageData as StorageModel;
                 if (storageModel != null)
                 {
@@ -100,24 +103,44 @@ namespace SenparcCourse.Service
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
             responseMessage.Content = "您发送的是：" + requestMessage.Content.ToString();
 
-            //输入cmd 进入cmd状态 ， exit退出cmd状态 
-            if (requestMessage.Content == "cmd")
-            {
-                CurrentMessageContext.StorageData = new StorageModel()
-                {
-                    IsInCmd = true
-                };
-            }
-            if (requestMessage.Content == "exit")
-            {
-                var storageModel = CurrentMessageContext.StorageData as StorageModel;
-                if (storageModel != null)
-                {
-                    storageModel.IsInCmd = false;
-                }
-            }
+            ////输入cmd 进入cmd状态 ， exit退出cmd状态 
+            //if (requestMessage.Content == "cmd")
+            //{
+            //    CurrentMessageContext.StorageData = new StorageModel()
+            //    {
+            //        IsInCmd = true
+            //    };
+            //}
+            //if (requestMessage.Content == "exit")
+            //{
+            //    var storageModel = CurrentMessageContext.StorageData as StorageModel;
+            //    if (storageModel != null)
+            //    {
+            //        storageModel.IsInCmd = false;
+            //    }
+            //}
 
-            return responseMessage;
+            //根据关键字回复不同消息
+            var handler = requestMessage.StartHandler(false)
+                .Keyword("cmd", () =>
+                {
+                    CurrentMessageContext.StorageData=new StorageModel()
+                    {
+                        IsInCmd = true
+                    };
+                    responseMessage.Content += "\r\n您已进入cmd模式";
+                    return responseMessage; 
+                }).Keywords(new[]{ "exit" ,"close", "quit" }, () =>
+                {
+                    CurrentMessageContext.StorageData = new StorageModel()
+                    {
+                        IsInCmd = false
+                    };
+                    responseMessage.Content += "\r\n您已退出cmd模式";
+                    return responseMessage;
+                });
+
+            return responseMessage; 
         }
 
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
