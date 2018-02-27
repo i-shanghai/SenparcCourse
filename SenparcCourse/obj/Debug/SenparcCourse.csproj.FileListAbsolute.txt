@@ -112,3 +112,8 @@ D:\06_Learning\SenparcCourse\SenparcCourse\obj\Debug\SenparcCourse.csprojResolve
 D:\06_Learning\SenparcCourse\SenparcCourse\obj\Debug\SenparcCourse.csproj.CoreCompileInputs.cache
 D:\06_Learning\SenparcCourse\SenparcCourse\obj\Debug\SenparcCourse.dll
 D:\06_Learning\SenparcCourse\SenparcCourse\obj\Debug\SenparcCourse.pdb
+D:\06_Learning\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.Cache.Redis.dll
+D:\06_Learning\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.Cache.Redis.RedLock.dll
+D:\06_Learning\SenparcCourse\SenparcCourse\bin\StackExchange.Redis.dll
+D:\06_Learning\SenparcCourse\SenparcCourse\bin\Senparc.Weixin.Cache.Redis.RedLock.xml
+D:\06_Learning\SenparcCourse\SenparcCourse\bin\StackExchange.Redis.xml

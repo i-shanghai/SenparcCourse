@@ -360,6 +360,16 @@
             公众号（小程序）、开放平台 API 的服务器地址（默认为：https://api.weixin.qq.com）
             </summary>
         </member>
+        <member name="F:Senparc.Weixin.Config._apiMpFileHost">
+            <summary>
+            公众号（小程序）、开放平台【文件下载】 API 的服务器地址（默认为：https://api.weixin.qq.com）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.ApiMpFileHost">
+            <summary>
+            公众号（小程序）、开放平台【文件下载】 API 的服务器地址（默认为：http://file.api.weixin.qq.com）
+            </summary>
+        </member>
         <member name="F:Senparc.Weixin.Config._apiWorkHost">
             <summary>
             企业微信API的服务器地址（默认为：https://qyapi.weixin.qq.com）
@@ -627,6 +637,16 @@
             <typeparam name="TM">IMessageContext&lt;TRequest, TResponse&gt;</typeparam>
             <typeparam name="TRequest">IRequestMessageBase</typeparam>
             <typeparam name="TResponse">IResponseMessageBase</typeparam>
+        </member>
+        <member name="F:Senparc.Weixin.Context.WeixinContextGlobal.Lock">
+            <summary>
+            上下文操作使用的同步锁
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Context.WeixinContextGlobal.OmitRepeatLock">
+            <summary>
+            去重专用锁
+            </summary>
         </member>
         <member name="F:Senparc.Weixin.Context.WeixinContextGlobal.UseWeixinContext">
             <summary>
@@ -1362,6 +1382,11 @@
              	客服帐号个数超过限制(10个客服账号)(kf_account count exceeded)
             </summary>
         </member>
+        <member name="F:Senparc.Weixin.ReturnCode.签名错误">
+            <summary>
+            小程序为“签名错误”。对应公众号： 87009, “errmsg” : “reply is not exists” //该回复不存在
+            </summary>
+        </member>
         <member name="T:Senparc.Weixin.ReturnCode_QY">
             <summary>
             企业号返回码
@@ -1493,7 +1518,7 @@
         </member>
         <member name="T:Senparc.Weixin.Exceptions.WeixinNullReferenceException">
             <summary>
-            菜单异常
+            Null异常
             </summary>
         </member>
         <member name="P:Senparc.Weixin.Exceptions.WeixinNullReferenceException.ParentObject">
@@ -1829,95 +1854,41 @@
             遍历使用多种缓存测试同一个过程（委托），确保不同的缓存策略行为一致
             </summary>
         </member>
-        <member name="T:Senparc.Weixin.MessageHandlers.IMessageHandler`2">
+        <member name="T:Senparc.Weixin.MessageHandlers.DefaultMessageHandlerAsyncEvent">
             <summary>
-            IMessageHandler接口
-            </summary>
-            <typeparam name="TRequest">IRequestMessageBase</typeparam>
-            <typeparam name="TResponse">IResponseMessageBase</typeparam>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.WeixinOpenId">
-            <summary>
-            发送者用户名（OpenId）
+            MessageHandler事件异步方法的默认调用方法（在没有override的情况下）
             </summary>
         </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.CancelExcute">
+        <member name="F:Senparc.Weixin.MessageHandlers.DefaultMessageHandlerAsyncEvent.DefaultResponseMessageAsync">
             <summary>
-            取消执行Execute()方法。一般在OnExecuting()中用于临时阻止执行Execute()。
-            默认为False。
-            如果在执行OnExecuting()执行前设为True，则所有OnExecuting()、Execute()、OnExecuted()代码都不会被执行。
-            如果在执行OnExecuting()执行过程中设为True，则后续Execute()及OnExecuted()代码不会被执行。
-            建议在设为True的时候，给ResponseMessage赋值，以返回友好信息。
+            调用DefaultResponseMessageAsync()方法
             </summary>
         </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.RequestMessage">
+        <member name="F:Senparc.Weixin.MessageHandlers.DefaultMessageHandlerAsyncEvent.SelfSynicMethod">
             <summary>
-            请求实体
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.ResponseMessage">
-            <summary>
-            响应实体
-            只有当执行Execute()方法后才可能有值
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.UsedMessageAgent">
-            <summary>
-            是否使用了MessageAgent代理
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OmitRepeatedMessage">
-            <summary>
-            忽略重复发送的同一条消息（通常因为微信服务器没有收到及时的响应）
-            </summary>
-        </member>
-        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecuting">
-            <summary>
-            执行微信请求前触发
-            </summary>
-        </member>
-        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.Execute">
-            <summary>
-            执行微信请求
-            </summary>
-        </member>
-        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecuted">
-            <summary>
-            执行微信请求后触发
-            </summary>
-        </member>
-        <member name="T:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument">
-            <summary>
-            为IMessageHandler单独提供XDocument类型的属性接口（主要是ResponseDocument）。
-            分离这个接口的目的是为了在MvcExtension中对IMessageHandler解耦，使用IMessageHandlerDocument接口直接操作XML。
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.RequestDocument">
-            <summary>
-            在构造函数中转换得到原始XML数据
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.ResponseDocument">
-            <summary>
-            根据ResponseMessageBase获得转换后的ResponseDocument
-            注意：这里每次请求都会根据当前的ResponseMessageBase生成一次，如需重用此数据，建议使用缓存或局部变量
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.FinalResponseDocument">
-            <summary>
-            最后返回的ResponseDocument。
-             如果是Senparc.Weixin.MP引用，并且未设置未加密，则应当和ResponseDocument一致；除此以外（Senparc.Weixin.QY或已加密），则应当在ResponseDocument基础上进行加密
-            </summary>
-        </member>
-        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.TextResponseMessage">
-            <summary>
-            文字返回信息。使用规则：当TextResponseMessage不为null时（""!=null），才获取ResponseDocument。
+            调用同名的同步方法（可能会导致执行会阻塞的过程）
             </summary>
         </member>
         <member name="T:Senparc.Weixin.MessageHandlers.MessageHandler`3">
             <summary>
             微信请求的集中处理方法
             此方法中所有过程，都基于Senparc.Weixin的基础功能，只为简化代码而设。
+            </summary>
+            <summary>
+            微信请求的集中处理方法
+            此方法中所有过程，都基于Senparc.Weixin的基础功能，只为简化代码而设。
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.MessageHandlers.MessageHandler`3._defaultMessageHandlerAsyncEvent">
+            <summary>
+            默认参数设置为 DefaultResponseMessageAsync
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.MessageHandler`3.DefaultMessageHandlerAsyncEvent">
+            <summary>
+            <para>MessageHandler事件异步方法的默认调用方法（在没有override的情况下）。默认值：DefaultDefaultResponseMessageAsync。</para>
+            <para>默认参数设置为 DefaultResponseMessageAsync，目的是为了确保默认状态下不会执行意料以外的代码，
+            因此，如果需要在异步方法中调用同名的同步方法，请手动将此参数设置为SelfSynicMethod。</para>
             </summary>
         </member>
         <member name="P:Senparc.Weixin.MessageHandlers.MessageHandler`3.WeixinContext">
@@ -1988,6 +1959,11 @@
             忽略重复发送的同一条消息（通常因为微信服务器没有收到及时的响应）
             </summary>
         </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.MessageHandler`3.MessageIsRepeated">
+            <summary>
+            消息是否已经被去重
+            </summary>
+        </member>
         <member name="P:Senparc.Weixin.MessageHandlers.MessageHandler`3.TextResponseMessage">
             <summary>
             文字类型返回消息
@@ -2019,7 +1995,8 @@
         </member>
         <member name="M:Senparc.Weixin.MessageHandlers.MessageHandler`3.#ctor(Senparc.Weixin.Entities.RequestMessageBase,System.Int32,System.Object)">
             <summary>
-            使用requestMessageBase的构造函数
+            <para>使用requestMessageBase的构造函数</para>
+            <para>次构造函数提供给具体的类库进行测试使用，例如Senparc.Weixin.Work</para>
             </summary>
             <param name="requestMessageBase"></param>
             <param name="maxRecordCount"></param>
@@ -2035,6 +2012,111 @@
         <member name="M:Senparc.Weixin.MessageHandlers.MessageHandler`3.Execute">
             <summary>
             执行微信请求
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MessageHandlers.IMessageHandler`2">
+            <summary>
+            IMessageHandler接口
+            </summary>
+            <typeparam name="TRequest">IRequestMessageBase</typeparam>
+            <typeparam name="TResponse">IResponseMessageBase</typeparam>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.WeixinOpenId">
+            <summary>
+            发送者用户名（OpenId）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.CancelExcute">
+            <summary>
+            取消执行Execute()方法。一般在OnExecuting()中用于临时阻止执行Execute()。
+            默认为False。
+            如果在执行OnExecuting()执行前设为True，则所有OnExecuting()、Execute()、OnExecuted()代码都不会被执行。
+            如果在执行OnExecuting()执行过程中设为True，则后续Execute()及OnExecuted()代码不会被执行。
+            建议在设为True的时候，给ResponseMessage赋值，以返回友好信息。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.RequestMessage">
+            <summary>
+            请求实体
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.ResponseMessage">
+            <summary>
+            响应实体
+            只有当执行Execute()方法后才可能有值
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.UsedMessageAgent">
+            <summary>
+            是否使用了MessageAgent代理
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OmitRepeatedMessage">
+            <summary>
+            忽略重复发送的同一条消息（通常因为微信服务器没有收到及时的响应）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandler`2.MessageIsRepeated">
+            <summary>
+            消息是否已经被去重
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecuting">
+            <summary>
+            执行微信请求前触发
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.Execute">
+            <summary>
+            执行微信请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecuted">
+            <summary>
+            执行微信请求后触发
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecutingAsync">
+            <summary>
+            执行微信请求前触发
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.ExecuteAsync">
+            <summary>
+            执行微信请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MessageHandlers.IMessageHandler`2.OnExecutedAsync">
+            <summary>
+            执行微信请求后触发
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument">
+            <summary>
+            为IMessageHandler单独提供XDocument类型的属性接口（主要是ResponseDocument）。
+            分离这个接口的目的是为了在MvcExtension中对IMessageHandler解耦，使用IMessageHandlerDocument接口直接操作XML。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.RequestDocument">
+            <summary>
+            在构造函数中转换得到原始XML数据
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.ResponseDocument">
+            <summary>
+            根据ResponseMessageBase获得转换后的ResponseDocument
+            注意：这里每次请求都会根据当前的ResponseMessageBase生成一次，如需重用此数据，建议使用缓存或局部变量
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.FinalResponseDocument">
+            <summary>
+            最后返回的ResponseDocument。
+             如果是Senparc.Weixin.MP引用，并且未设置未加密，则应当和ResponseDocument一致；除此以外（Senparc.Weixin.QY或已加密），则应当在ResponseDocument基础上进行加密
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MessageHandlers.IMessageHandlerDocument.TextResponseMessage">
+            <summary>
+            文字返回信息。使用规则：当TextResponseMessage不为null时（""!=null），才获取ResponseDocument。
             </summary>
         </member>
         <member name="T:Senparc.Weixin.MessageQueue.SenparcMessageQueue">
@@ -2911,6 +2993,12 @@
             Get 请求处理
             </summary>
         </member>
+        <member name="M:Senparc.Weixin.HttpUtility.Get.GetRandomFileName">
+            <summary>
+            获取随机文件名
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Senparc.Weixin.HttpUtility.Get.GetJson``1(System.String,System.Text.Encoding,System.Nullable{System.Int32})">
             <summary>
             GET方式请求URL，并返回T类型
@@ -2928,12 +3016,12 @@
             <param name="url"></param>
             <param name="stream"></param>
         </member>
-        <member name="M:Senparc.Weixin.HttpUtility.Get.Download(System.String,System.String)">
+        <member name="M:Senparc.Weixin.HttpUtility.Get.Download(System.String,System.String,System.Int32)">
             <summary>
             从Url下载，并保存到指定目录
             </summary>
             <param name="url">需要下载文件的Url</param>
-            <param name="filePathName"></param>
+            <param name="filePathName">保存文件的路径，如果下载文件包含文件名，按照文件名储存，否则将分配Ticks随机文件名</param>
             <returns></returns>
         </member>
         <member name="M:Senparc.Weixin.HttpUtility.Get.GetJsonAsync``1(System.String,System.Text.Encoding,System.Nullable{System.Int32})">
