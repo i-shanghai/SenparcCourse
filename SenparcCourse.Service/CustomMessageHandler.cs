@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Senparc.Weixin.MP.Containers;
 
 namespace SenparcCourse.Service
 {
@@ -27,9 +28,27 @@ namespace SenparcCourse.Service
         {
         }
 
+        /// <summary>
+        /// 关注后，欢迎消息
+        /// </summary>
+        /// <param name="requestMessage"></param>
+        /// <returns></returns>
+        public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
+        {
+            //获取关注人员信息  
+            //var accessToken = AccessTokenContainer.GetAccessToken(Config.AppId);
+            var userInfo = Senparc.Weixin.MP.AdvancedAPIs.UserApi.Info(Config.AppId, base.WeixinOpenId);
+            var nickName = userInfo.nickname;
+            var title = userInfo.sex == 1 ? "先生" : (userInfo.sex == 0 ? "女士" : "");
+
+            var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();
+            responseMessage.Content = "欢迎{0}{1} 关注!".FormatWith(nickName, title);
+
+            return responseMessage;
+        }
+
         public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
         {
-
             if (requestMessage.EventKey == "KONG")
             {
                 //return null;
@@ -37,6 +56,9 @@ namespace SenparcCourse.Service
             }
             else if (requestMessage.EventKey == "NEWS")
             {
+                //通过客服消息接口返回一条消息
+                var result = Senparc.Weixin.MP.AdvancedAPIs.CustomApi.SendText(Config.AppId, base.WeixinOpenId, "客服消息，马上回复.进入<a href=\"https://www.baidu.com\">进入百度</a>");
+
                 var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageNews>();
                 var articleNew = new Article()
                 {
@@ -67,7 +89,6 @@ namespace SenparcCourse.Service
                     {
                         responseMessage.Content = responseMessage.Content + "\r\n退出CMD状态";
                     }
-
                 }
 
                 return responseMessage;
@@ -75,7 +96,7 @@ namespace SenparcCourse.Service
         }
 
 
-        /// <summary>
+        /// <summary> 
         /// 返回地理位置
         /// </summary>
         /// <param name="requestMessage"></param>
@@ -177,8 +198,9 @@ namespace SenparcCourse.Service
             return responseMessage as IResponseMessageBase;
         }
 
+
         /// <summary>
-        /// 文本消息或者点击事件消息
+        /// 文本消息或者点击事件消息，会 覆盖单独的OnTextRequest
         /// </summary>
         /// <param name="requestMessage"></param>
         /// <returns></returns>
@@ -231,13 +253,10 @@ namespace SenparcCourse.Service
             {
                 ((ResponseMessageText)ResponseMessage).Content += "\r\n【消息签名】";
 
-                //开队列或者线程，处理数据库相当问题
-
+                //开队列或者线程，处理数据库相当问题 
             }
-
             base.OnExecuted();
         }
-
 
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
         {

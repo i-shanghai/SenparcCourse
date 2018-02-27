@@ -21,3 +21,4 @@ D:\06_Learning\SenparcCourse\SenparcCourse.Service\bin\Debug\Senparc.Weixin.MP.x
 D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csproj.CoreCompileInputs.cache
 D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.dll
 D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.pdb
+D:\06_Learning\SenparcCourse\SenparcCourse.Service\obj\Debug\SenparcCourse.Service.csprojResolveAssemblyReference.cache
