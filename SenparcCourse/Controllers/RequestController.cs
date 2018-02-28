@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Senparc.Weixin.Helpers.Extensions;
 using SenparcCourse.Service.Dtos;
 
 namespace SenparcCourse.Controllers
@@ -65,5 +67,16 @@ namespace SenparcCourse.Controllers
 
             return Content(html);
         }
+
+
+        public ActionResult GetImage(string url = "http://sdk.weixin.senparc.com/images/book-cover-front-small-3d-transparent.png")
+        {
+            string fileName = Server.MapPath("~/App_Data/DownloadImage_{0}.jpg".FormatWith(DateTime.Now.Ticks));
+
+            Senparc.Weixin.HttpUtility.Get.Download(url, fileName);
+
+            return Content("图片保存：" + fileName);
+        }
+
     }
 }

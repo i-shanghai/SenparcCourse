@@ -166,7 +166,13 @@ namespace SenparcCourse.Service
 
                     return responseMessageText;
 
-                }).Keywords(new[] { "exit", "close", "quit" }, () =>
+                })
+                .Keyword("电子卡", () =>
+                {
+                    CustomApi.SendCard(Config.AppId, WeixinOpenId, "pifDGvpJKLpOc2vQxZHPslkxItqw", null, 10000);
+                    return new ResponseMessageNoResponse(); 
+                })
+                .Keywords(new[] { "exit", "close", "quit" }, () =>
                  {
                      var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
 
