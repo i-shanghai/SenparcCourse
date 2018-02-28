@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Senparc.Weixin.MessageQueue;
+﻿using Senparc.Weixin.MessageQueue;
 using Senparc.Weixin.MP.AdvancedAPIs;
-using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Entities;
+using System;
 
 namespace SenparcCourse.Service
 {
@@ -29,13 +24,15 @@ namespace SenparcCourse.Service
                         Guid.NewGuid().ToString(), "SendMessage");
 
                     messageQueue.Add(myKey, () =>
-                    {
-
+                    { 
                         var kfResponseMessage = responseMessage as ResponseMessageText;
-                        kfResponseMessage.Content += "\r\n【客服消息队列-1】";
+                        if (kfResponseMessage != null)
+                        {
+                            kfResponseMessage.Content += "\r\n【客服消息队列-1】";
 
-                        //在队列中发送消息
-                        CustomApi.SendText(Config.AppId, openId, kfResponseMessage.Content);
+                            //在队列中发送消息
+                            CustomApi.SendText(Config.AppId, openId, kfResponseMessage.Content);
+                        }
                     });
                 }
                 {
@@ -46,10 +43,13 @@ namespace SenparcCourse.Service
                     {
 
                         var kfResponseMessage = responseMessage as ResponseMessageText;
-                        kfResponseMessage.Content += "\r\n【客服消息队列-2】";
+                        if (kfResponseMessage != null)
+                        {
+                            kfResponseMessage.Content += "\r\n【客服消息队列-2】";
 
-                        //在队列中发送消息
-                        CustomApi.SendText(Config.AppId, openId, kfResponseMessage.Content);
+                            //在队列中发送消息
+                            CustomApi.SendText(Config.AppId, openId, kfResponseMessage.Content);
+                        }
                     });
                 }
             }

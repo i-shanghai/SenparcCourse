@@ -9,11 +9,15 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web.Routing;
 using System.Xml.Linq;
+using Senparc.Weixin.HttpUtility;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Containers;
+using SenparcCourse.Service.Dtos;
 
 namespace SenparcCourse.Service
 {
@@ -174,7 +178,26 @@ namespace SenparcCourse.Service
 
                      return responseMessageText;
 
-                 }).Regex(@"^http", () =>
+                 }).Regex(@"天气 \S+", () =>
+                {
+                    //Get Json Result 获取天气信息。 正则表达式 使用
+                    var city = Regex.Match(requestMessage.Content, @"(?<=天气 )(\S+)").Value;
+                    var url = "https://www.sojson.com/open/api/weather/json.shtml?city={0}".FormatWith(city.UrlEncode());
+
+                    var weatherResult = Get.GetJson<WeatherResult>(url, null, null);
+
+                    var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
+                    responseMessageText.Content = @"天气查询结果
+==========
+城市：{0}的天气信息
+时期：{1}
+结果：{2}
+时间：{3}".FormatWith(weatherResult.city, weatherResult.date,
+                        weatherResult.message, weatherResult.AddTime);
+
+                    return responseMessageText;
+
+                }).Regex(@"^http", () =>
                  {
                      var responseMessageNews = requestMessage.CreateResponseMessage<ResponseMessageNews>();
                      var articleNew = new Article()
@@ -268,7 +291,7 @@ namespace SenparcCourse.Service
 
                 //开队列或者线程，处理数据库相关问题 
 
-                Thread.Sleep(5000);//这样超出5s没有返回消息给微信Server。
+                //Thread.Sleep(5000);//这样超出5s没有返回消息给微信Server。
 
                 //有可能超时的时候，借用客服消息返回用户信息
                 EndTime = DateTime.Now;
@@ -282,7 +305,7 @@ namespace SenparcCourse.Service
                     //ResponseMessage = new ResponseMessageNoResponse();
 
                     MessageQueueHandler messageQueueHandler = new MessageQueueHandler();
-                    messageQueueHandler.SendKfMessage(base.WeixinOpenId, ResponseMessage); 
+                    messageQueueHandler.SendKfMessage(base.WeixinOpenId, ResponseMessage);
                 }
 
             }
