@@ -9,13 +9,19 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using Senparc.Weixin.MP.CommonAPIs;
 using Senparc.Weixin.MP.Containers;
 
 namespace SenparcCourse.Service
 {
     public class CustomMessageHandler : MessageHandler<CustomMessageContext>
     {
+        private DateTime StartTime;
+        private DateTime EndTime;
+
         public CustomMessageHandler(Stream inputStream, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(inputStream, postModel, maxRecordCount, developerInfo)
         {
         }
@@ -26,6 +32,13 @@ namespace SenparcCourse.Service
 
         public CustomMessageHandler(RequestMessageBase requestMessageBase, PostModel postModel = null, int maxRecordCount = 0, DeveloperInfo developerInfo = null) : base(requestMessageBase, postModel, maxRecordCount, developerInfo)
         {
+        }
+
+        public override XDocument Init(XDocument postDataDocument, object postData = null)
+        {
+            StartTime = DateTime.Now;
+
+            return base.Init(postDataDocument, postData);
         }
 
         /// <summary>
@@ -253,7 +266,25 @@ namespace SenparcCourse.Service
             {
                 ((ResponseMessageText)ResponseMessage).Content += "\r\n【消息签名】";
 
-                //开队列或者线程，处理数据库相当问题 
+                //开队列或者线程，处理数据库相关问题 
+
+                Thread.Sleep(5000);//这样超出5s没有返回消息给微信Server。
+
+                //有可能超时的时候，借用客服消息返回用户信息
+                EndTime = DateTime.Now;
+                int runTime = (EndTime - StartTime).Seconds;
+                if (runTime > 4)
+                {
+                    //使用客服消息返回信息
+                    ////CustomApi.SendText(Config.AppId, base.WeixinOpenId,
+                    ////   ((ResponseMessageText)ResponseMessage).Content + "\r\n" + "【客服消息】");
+
+                    //ResponseMessage = new ResponseMessageNoResponse();
+
+                    MessageQueueHandler messageQueueHandler = new MessageQueueHandler();
+                    messageQueueHandler.SendKfMessage(base.WeixinOpenId, ResponseMessage); 
+                }
+
             }
             base.OnExecuted();
         }
