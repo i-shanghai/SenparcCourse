@@ -47,7 +47,7 @@ namespace SenparcCourse.Controllers
         {
             string url = "https://www.sojson.com/open/api/weather/json.shtml?city=%E4%B8%8A%E6%B5%B7";
 
-            var weatherResult = Senparc.Weixin.HttpUtility.Get.GetJson<WeatherResult>(url, null, null);
+            var weatherResult = Senparc.Weixin.HttpUtility.Get.GetJson<WeatherAllInfoResult>(url, null, null);
 
             return Content(JsonConvert.SerializeObject(weatherResult));
         }
