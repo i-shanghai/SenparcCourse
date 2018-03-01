@@ -54,6 +54,18 @@
             LocalCacheStrategy的构造函数
             </summary>
         </member>
+        <member name="M:Senparc.Weixin.Cache.CacheStrategyFactory.RegisterObjectCacheStrategy(System.Func{Senparc.Weixin.Cache.IObjectCacheStrategy})">
+            <summary>
+            注册当前全局环境下的缓存策略
+            </summary>
+            <param name="func">如果为null，将使用默认的本地缓存策略（LocalObjectCacheStrategy.Instance）</param>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.CacheStrategyFactory.GetObjectCacheStrategyInstance">
+            <summary>
+            如果
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Senparc.Weixin.Cache.BaseCacheStrategy">
             <summary>
             泛型缓存策略基类
@@ -2758,6 +2770,50 @@
             <remarks>
             The attribute must be mentioned in your member reordering patterns
             </remarks>
+        </member>
+        <member name="T:Senparc.Weixin.Register">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Register.ChangeDefaultCacheNamespace(Senparc.Weixin.RegisterServices.IRegisterService,System.String)">
+            <summary>
+            修改默认缓存命名空间
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="customNamespace">自定义命名空间名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Register.RegisterThreads(Senparc.Weixin.RegisterServices.IRegisterService)">
+            <summary>
+            注册 Threads 的方法（如果不注册此线程，则AccessToken、JsTicket等都无法使用SDK自动储存和管理）
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Register.RegisterTraceLog(Senparc.Weixin.RegisterServices.IRegisterService,System.Action)">
+            <summary>
+            注册 TraceLog 的方法
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.RegisterServices.IRegisterService">
+            <summary>
+            快捷注册接口
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.RegisterServices.RegisterService">
+            <summary>
+            快捷注册类，IRegisterService的默认实现
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.RegisterServices.RegisterService.Start">
+            <summary>
+            开始流程
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Senparc.Weixin.Threads.SenparcMessageQueueThreadUtility">
             <summary>
