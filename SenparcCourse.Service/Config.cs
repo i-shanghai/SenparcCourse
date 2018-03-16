@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace SenparcCourse.Service
 {
-    public  class Config
+    public class Config
     {
         public static string AppId = System.Configuration.ConfigurationManager.AppSettings["WeixinAppId"];
+
+        public static int LogRecordCount = 0;
+
     }
 }

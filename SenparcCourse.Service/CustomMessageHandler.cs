@@ -190,6 +190,7 @@ namespace SenparcCourse.Service
                     var city = Regex.Match(requestMessage.Content, @"(?<=天气 )(\S+)").Value;
                     var url = "https://www.sojson.com/open/api/weather/json.shtml?city={0}".FormatWith(city.UrlEncode());
 
+                    //直接返回Json结果
                     var weatherResult = Get.GetJson<WeatherResult>(url, null, null);
 
                     var responseMessageText = requestMessage.CreateResponseMessage<ResponseMessageText>();
