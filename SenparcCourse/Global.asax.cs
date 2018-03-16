@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Senparc.Weixin.Cache;
 using Senparc.Weixin.Cache.Redis;
+using SenparcCourse.Service;
 
 namespace SenparcCourse
 {
@@ -19,9 +21,16 @@ namespace SenparcCourse
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
+            DateTime dtStart = DateTime.Now;
+
+            WeixinTraceConfig();// 开户日志记录
             RegisterWeixinCache(); //注册分布式缓存（按需，如果需要，必须放在第一个）
             RegisterThreads();  //激活微信缓存及队列线程（必须）,要在RegisterWeixin之前
             RegisterWeixin();  //注册Demo所用微信公众号的账号信息（按需）
+
+            DateTime dtEnd = DateTime.Now; 
+            Senparc.Weixin.WeixinTrace.SendCustomLog("系统处定义日志", "系统启动时间" + (dtEnd - dtStart).TotalMilliseconds.ToString());
         }
 
         /// <summary>
@@ -63,5 +72,20 @@ namespace SenparcCourse
 
             //Senparc.Weixin.MP.Containers.JsApiTicketContainer.Register(appId, appSecret, "公众号-测试号-JsApiTicket"); 
         }
+
+        private void WeixinTraceConfig()
+        {
+            Senparc.Weixin.Config.IsDebug = true;
+
+            //记录日志调用的次数
+            Senparc.Weixin.WeixinTrace.OnLogFunc = () => { Config.LogRecordCount++; };
+
+            Senparc.Weixin.WeixinTrace.OnWeixinExceptionFunc = ex =>
+            {
+               // var eventService = new EventService();
+            };
+        }
+
+
     }
 }
