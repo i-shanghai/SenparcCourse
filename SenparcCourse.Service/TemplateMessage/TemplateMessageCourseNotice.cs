@@ -30,7 +30,7 @@ namespace SenparcCourse.Service.TemplateMessage
         /// <param name="courseStatus"></param>
         /// <param name="learningProgress"></param>
         /// <param name="remark"></param>
-        public TemplateMessageCourseNotice( string strUrl,string strFirst,string courseName,string courseStatus,string learningProgress,string strRemark) : base("0KX8hioVH-OWJgIJusS9Ju5XkIS4rWphKXcDHY5R9Z4", strUrl,
+        public TemplateMessageCourseNotice( string strUrl,string strFirst,string courseName,string courseStatus,string learningProgress,string strRemark,string templateId= "0KX8hioVH-OWJgIJusS9Ju5XkIS4rWphKXcDHY5R9Z4") : base(templateId, strUrl,
             "课程进度通知")
         {
             first = new TemplateDataItem(strFirst);

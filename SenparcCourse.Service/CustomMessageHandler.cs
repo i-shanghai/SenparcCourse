@@ -325,6 +325,27 @@ namespace SenparcCourse.Service
             base.OnExecuted();
         }
 
+
+        public override IResponseMessageBase OnEvent_TemplateSendJobFinishRequest(RequestMessageEvent_TemplateSendJobFinish requestMessage)
+        {
+            string strAdminOpenId = "oifDGvmdSfltOJPL2QSuCdEIN0io";
+            if (requestMessage.Status != "success")
+            {
+                //发送失败，进行处理 
+                Senparc.Weixin.MP.AdvancedAPIs.CustomApi.SendText(Config.AppId, strAdminOpenId, "消息发送失败，MsgID:" + requestMessage.MsgID);
+            }
+            else
+            {
+                //再用一条客服消息通知用户模板消息已经发送完成
+                Senparc.Weixin.MP.AdvancedAPIs.CustomApi.SendText(Config.AppId, strAdminOpenId, "消息发送成功，MsgID:" + requestMessage.MsgID);
+
+            }
+
+            return new SuccessResponseMessage();
+        }
+         
+
+
         public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
         {
             var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageText>();

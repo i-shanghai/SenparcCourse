@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Senparc.Weixin;
@@ -233,11 +234,11 @@ namespace SenparcCourse.Controllers
         }
 
         /// <summary>
-        /// 给指定用户发送模板消息
+        /// 给指定用户发送模板消息。异步Action 执行发送模版消息
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public ActionResult SendTemplate(string openId = "oifDGvmdSfltOJPL2QSuCdEIN0io")
+        public async Task<ActionResult> SendTemplate(string openId = "oifDGvmdSfltOJPL2QSuCdEIN0io")
         {
             string strUrl = "http://sdk.weixin.senparc.com/";
 
@@ -260,7 +261,7 @@ namespace SenparcCourse.Controllers
                 new TemplateMessageCourseNotice(strUrl, "您的课程已经完成90%了奥", "微信公众号开发", "学习进行中", "90 %", "加油加油！");
 
             var sendReuslt =
-                Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessage(Config.AppId, openId,
+               await Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessageAsync(Config.AppId, openId,
                     templateCourseNotice);
              
 
