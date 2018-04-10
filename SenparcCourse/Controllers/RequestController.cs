@@ -13,6 +13,7 @@ using Senparc.Weixin.Exceptions;
 using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using Senparc.Weixin.MP.Containers;
 using SenparcCourse.Service;
+using SenparcCourse.Service.TemplateMessage;
 using Config = SenparcCourse.Service.Config;
 
 namespace SenparcCourse.Controllers
@@ -240,20 +241,28 @@ namespace SenparcCourse.Controllers
         {
             string strUrl = "http://sdk.weixin.senparc.com/";
 
-            string strTemplateId = Config.GetTempaleteMessageBag(Config.AppId, "课程进度通知").MessageId;
+            #region 发送模板消息，方法1
+            //string strTemplateId = Config.GetTempaleteMessageBag(Config.AppId, "课程进度通知").MessageId;
+            //// 构建模板消息内容
+            //var templateContent = new TemplateItem
+            //{
+            //    first = new TemplateDataItem("您的课程已经完成80%了奥", "#FF0000"),
+            //    keyword1 = new TemplateDataItem("微信公众号开发"),
+            //    keyword2 = new TemplateDataItem("学习进行中"),
+            //    keyword3 = new TemplateDataItem("80 % "),
+            //    remark = new TemplateDataItem("加油加油！")
+            //};
+            //var sendReuslt = Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessage(Config.AppId, openId, strTemplateId, strUrl, templateContent, null);
 
+            #endregion
+            //把1个模板消息，封装到1个类中。方便调用
+            var templateCourseNotice =
+                new TemplateMessageCourseNotice(strUrl, "您的课程已经完成90%了奥", "微信公众号开发", "学习进行中", "90 %", "加油加油！");
+
+            var sendReuslt =
+                Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessage(Config.AppId, openId,
+                    templateCourseNotice);
              
-            // 构建模板消息内容
-            var templateContent = new TemplateItem
-            {
-                first = new TemplateDataItem( "您的课程已经完成80%了奥,", "#FF0000")  ,
-                keyword1 = new TemplateDataItem("微信公众号开发") ,
-                keyword2 = new TemplateDataItem("学习进行中") ,
-                keyword3 = new TemplateDataItem("80 % ") ,
-                remark = new TemplateDataItem("加油加油！") 
-            };
-
-            var sendReuslt = Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessage(Config.AppId, openId, strTemplateId, strUrl, templateContent, null);
 
             return Content("模板消息发送结果：" + sendReuslt.ToJson());
         }
