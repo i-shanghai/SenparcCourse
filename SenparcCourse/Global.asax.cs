@@ -70,6 +70,8 @@ namespace SenparcCourse
 
             Senparc.Weixin.MP.Containers.AccessTokenContainer.Register(appId, appSecret, "公众号-测试号-AccessToken");
 
+            //多个公众号的注册
+            Senparc.Weixin.MP.Containers.AccessTokenContainer.Register("appId2222", "appSecret2222", "公众号-第二个测试号-AccessToken");
             //Senparc.Weixin.MP.Containers.JsApiTicketContainer.Register(appId, appSecret, "公众号-测试号-JsApiTicket"); 
         }
 

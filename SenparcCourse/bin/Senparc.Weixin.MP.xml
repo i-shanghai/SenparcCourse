@@ -3832,9 +3832,59 @@
             <param name="timeOut"></param>
             <returns></returns>
         </member>
+        <member name="T:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson">
+            <summary>
+            查看指定文章的评论数据 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson.comment">
+            <summary>
+            评论列表
+            </summary>
+        </member>
         <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson.total">
             <summary>
-            总数，非comment的size around
+            总数，非comment的size
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.user_comment_id">
+            <summary>
+            用户评论id
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.create_time">
+            <summary>
+            评论时间
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.content">
+            <summary>
+            评论内容
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.comment_type">
+            <summary>
+            是否精选评论，0为即非精选，1为true，即精选
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.openid">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment.reply">
+            <summary>
+            回复
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment_reply.content">
+            <summary>
+            作者回复内容
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.AdvancedAPIs.Comment.CommentJson.ListResultJson_comment_reply.create_time">
+            <summary>
+            作者回复时间
             </summary>
         </member>
         <member name="P:Senparc.Weixin.MP.AdvancedAPIs.CustomService.CustomInfoJson.kf_list">
@@ -11037,6 +11087,11 @@
              用户所在的分组ID
             </summary>
         </member>
+        <member name="P:Senparc.Weixin.MP.Entities.WeixinUserInfoResult.tagid_list">
+            <summary>
+            用户被打上的标签ID列表
+            </summary>
+        </member>
         <member name="T:Senparc.Weixin.MP.Entities.Menu.ButtonGroupBase">
             <summary>
             整个按钮设置（可以直接用ButtonGroup实例返回JSON对象）
@@ -13705,6 +13760,11 @@
             动态去重判断委托，仅当返回值为false时，不使用消息去重功能
             </summary>
         </member>
+        <member name="M:Senparc.Weixin.MP.MessageHandlers.MessageHandler`1.MarkRepeatedMessage">
+            <summary>
+            标记为已重复消息
+            </summary>
+        </member>
         <member name="M:Senparc.Weixin.MP.MessageHandlers.MessageHandler`1.#ctor(System.IO.Stream,Senparc.Weixin.MP.Entities.Request.PostModel,System.Int32,Senparc.Weixin.MP.AppStore.DeveloperInfo)">
             <summary>
             构造MessageHandler
@@ -14671,6 +14731,14 @@
             <param name="length"></param>
             <returns></returns>
         </member>
+        <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3Util.DecodeRefundReqInfo(System.String,System.String)">
+            <summary>
+            对退款通知消息进行解密
+            </summary>
+            <param name="str"></param>
+            <param name="mchKey"></param>
+            <returns></returns>
+        </member>
         <member name="T:Senparc.Weixin.MP.TenPayLibV3.TenPayV3MicroPayRequestData_ServiceProvider">
             <summary>
             【境内服务商】微信支付提交的XML Data数据[提交刷卡支付]
@@ -14724,6 +14792,15 @@
             返回可用的微信支付地址（自动判断是否使用沙箱）
             </summary>
             <param name="urlFormat">如：<code>https://api.mch.weixin.qq.com/{0}pay/unifiedorder</code></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3.GetSignKey(Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData,System.Int32)">
+            <summary>
+            获取验签秘钥API
+            </summary>
+            <param name="mchId">商户号</param>
+            <param name="nonceStr">随机字符串</param>
+            <param name="sign">签名</param>
             <returns></returns>
         </member>
         <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3.Unifiedorder(System.String,System.Int32)">
@@ -15038,6 +15115,47 @@
             <param name="tarType"></param>
             <param name="signType"></param>
         </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData">
+            <summary>
+            微信支付提交的XML Data数据[获取验签秘钥API]
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.MchId">
+            <summary>
+            商户号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.NonceStr">
+            <summary>
+            随机字符串
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.OutTradeNo">
+            <summary>
+            商家订单号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.SignType">
+            <summary>
+            签名类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetSignKeyRequestData.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            关闭订单 请求参数
+            </summary>
+            <param name="appId"></param>
+            <param name="mchId"></param>
+            <param name="outTradeNo"></param>
+            <param name="key"></param>
+            <param name="nonceStr"></param>
+            <param name="signType"></param>
+        </member>
         <member name="T:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetTransferInfoRequestData">
              <summary>
             微信支付提交的XML Data数据[查询企业付款]
@@ -15065,7 +15183,7 @@
         </member>
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetTransferInfoRequestData.Key">
             <summary>
-            
+            Key
             </summary>
         </member>
         <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3GetTransferInfoRequestData.#ctor(System.String,System.String,System.String,System.String,System.String)">
@@ -15477,6 +15595,11 @@
             基础返回结果（微信支付返回结果基类）
             </summary>
         </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3Result.ResultXml">
+            <summary>
+            XML内容
+            </summary>
+        </member>
         <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3Result.GetXmlValue(System.String)">
             <summary>
             获取Xml结果中对应节点的值
@@ -15498,7 +15621,7 @@
         </member>
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.Result.appid">
             <summary>
-            微信分配的公众账号ID
+            微信分配的公众账号ID（付款到银行卡接口，此字段不提供）
             </summary>
         </member>
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.Result.mch_id">
@@ -16003,7 +16126,7 @@
         </member>
         <member name="T:Senparc.Weixin.MP.TenPayLibV3.GetTransferInfoResult">
             <summary>
-            
+            商户的企业付款操作进行结果查询，返回付款操作详细结果
             </summary>
         </member>
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.GetTransferInfoResult.result_code">
@@ -16069,6 +16192,22 @@
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.GetTransferInfoResult.desc">
             <summary>
             付款描述
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.TenpayV3GetSignKeyResult">
+            <summary>
+            获取验签秘钥API 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenpayV3GetSignKeyResult.mch_id">
+            <summary>
+            微信支付分配的微信商户号
+            </summary>
+        </member>
+        <!-- 对于成员“P:Senparc.Weixin.MP.TenPayLibV3.TenpayV3GetSignKeyResult.sandbox_signkey”忽略有格式错误的 XML 注释 -->
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.PayBankResult">
+            <summary>
+            付款到银行卡返回结果
             </summary>
         </member>
         <member name="T:Senparc.Weixin.MP.TenPayLibV3.TenPayV3ReverseRequestData">
@@ -16455,9 +16594,35 @@
             TenPayV3UnifiedorderRequestData 的 SceneInfo 参数（非必填）
             </summary>
         </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3UnifiedorderRequestData_SceneInfo.store_info">
+            <summary>
+            统一支付接口信息（H5支付请留空）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.TenPayV3UnifiedorderRequestData_SceneInfo.h5_info">
+            <summary>
+            H5统一支付接口信息（非H5支付请留空）
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3UnifiedorderRequestData_SceneInfo.#ctor(System.Boolean,Senparc.Weixin.MP.TenPayLibV3.IH5_Info)">
+            <summary>
+            TenPayV3UnifiedorderRequestData_SceneInfo 构造函数
+            </summary>
+            <param name="isH5Pay">是否为H5支付</param>
+            <param name="h5Info">当isH5Pay为true时填写，可以使用TenPayV3UnifiedorderRequestData_SceneInfo.GetH5InfoInstance&lt;T&gt;()方法获得</param>
+        </member>
+        <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3UnifiedorderRequestData_SceneInfo.GetH5InfoInstance``1(System.String)">
+            <summary>
+            获取 IH5_Info 接口示例，可用类型：H5_Info_IOS，H5_Info_Android，H5_Info_WAP
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type">场景类型，如：IOS，Android，Wap</param>
+            <returns></returns>
+        </member>
         <member name="M:Senparc.Weixin.MP.TenPayLibV3.TenPayV3UnifiedorderRequestData_SceneInfo.ToString">
             <summary>
-            输出JSON格式：{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }}
+            <para>常规输出JSON格式：{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }}</para>
+            <para>H5支付JSON格式：{"h5_info": {"type":"IOS","app_name": "王者荣耀","bundle_id": "com.tencent.wzryIOS"}}</para>
             </summary>
             <returns></returns>
         </member>
@@ -16484,6 +16649,76 @@
         <member name="P:Senparc.Weixin.MP.TenPayLibV3.Store_Info.address">
             <summary>
             （非必填）门店详细地址，String(128)
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.IH5_Info">
+            <summary>
+            H5支付信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.IH5_Info.type">
+            <summary>
+            场景类型
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.H5_Info_IOS">
+            <summary>
+            H5支付-IOS移动应用
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_IOS.type">
+            <summary>
+            场景类型，如IOS
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_IOS.app_name">
+            <summary>
+            场景类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_IOS.bundle_id">
+            <summary>
+            bundle_id
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.H5_Info_Android">
+            <summary>
+            H5支付-安卓移动应用
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_Android.type">
+            <summary>
+            场景类型，如Android
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_Android.app_name">
+            <summary>
+            应用名
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_Android.package_name">
+            <summary>
+            包名
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.TenPayLibV3.H5_Info_WAP">
+            <summary>
+            H5支付-WAP网站应用
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_WAP.type">
+            <summary>
+            场景类型，如Wap
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_WAP.wap_url">
+            <summary>
+            WAP网站URL地址
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.TenPayLibV3.H5_Info_WAP.wap_name">
+            <summary>
+            WAP 网站名
             </summary>
         </member>
         <member name="M:Senparc.Weixin.MP.TenPayLib.CheckRequestHandler.#ctor(System.Web.HttpContext)">

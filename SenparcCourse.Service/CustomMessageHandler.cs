@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Routing;
 using System.Xml.Linq;
 using Senparc.Weixin.HttpUtility;
@@ -62,6 +63,11 @@ namespace SenparcCourse.Service
             responseMessage.Content = "欢迎{0}{1} 关注!".FormatWith(nickName, title);
 
             return responseMessage;
+
+            //System.Threading.Thread.Sleep(1000);
+
+            //CustomApi.SendText(Config.AppId, base.WeixinOpenId, "客服消息，马上回复.进入<a href=\"https://www.baidu.com\">进入百度</a>");
+            //return new ResponseMessageNoResponse(); //不返回任何消息
         }
 
         public override IResponseMessageBase OnEvent_ClickRequest(RequestMessageEvent_Click requestMessage)
@@ -74,7 +80,7 @@ namespace SenparcCourse.Service
             else if (requestMessage.EventKey == "NEWS")
             {
                 //通过客服消息接口返回一条消息
-                var result = Senparc.Weixin.MP.AdvancedAPIs.CustomApi.SendText(Config.AppId, base.WeixinOpenId, "客服消息，马上回复.进入<a href=\"https://www.baidu.com\">进入百度</a>");
+                //  CustomApi.SendTextAsync(Config.AppId, base.WeixinOpenId, "客服消息，马上回复.进入<a href=\"https://www.baidu.com\">进入百度</a>");
 
                 var responseMessage = requestMessage.CreateResponseMessage<ResponseMessageNews>();
                 var articleNew = new Article()
@@ -170,7 +176,7 @@ namespace SenparcCourse.Service
                 .Keyword("电子卡", () =>
                 {
                     CustomApi.SendCard(Config.AppId, WeixinOpenId, "pifDGvpJKLpOc2vQxZHPslkxItqw", null, 10000);
-                    return new ResponseMessageNoResponse(); 
+                    return new ResponseMessageNoResponse();
                 })
                 .Keywords(new[] { "exit", "close", "quit" }, () =>
                  {

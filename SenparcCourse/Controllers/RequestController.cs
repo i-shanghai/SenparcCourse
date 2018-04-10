@@ -10,7 +10,9 @@ using System.Web;
 using System.Web.Mvc;
 using Senparc.Weixin;
 using Senparc.Weixin.Exceptions;
+using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using Senparc.Weixin.MP.Containers;
+using SenparcCourse.Service;
 using Config = SenparcCourse.Service.Config;
 
 namespace SenparcCourse.Controllers
@@ -215,9 +217,9 @@ namespace SenparcCourse.Controllers
             catch (WeixinNullReferenceException ex)
             {
                 var obj = ex.ParentObject as MyClass;
-                obj.Data = "Data Is Null";
+                if (obj != null) obj.Data = "Data Is Null";
 
-                Senparc.Weixin.WeixinTrace.SendCustomLog("系统日志", "MyClass Data Is Null"); 
+                Senparc.Weixin.WeixinTrace.SendCustomLog("系统日志", "MyClass Data Is Null");
             }
 
 
@@ -229,7 +231,32 @@ namespace SenparcCourse.Controllers
             return Content("accessToken获取成功：" + accessToken.Substring(0, 20) + "\n" + Config.LogRecordCount.ToString());
         }
 
+        /// <summary>
+        /// 给指定用户发送模板消息
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public ActionResult SendTemplate(string openId = "oifDGvmdSfltOJPL2QSuCdEIN0io")
+        {
+            string strUrl = "http://sdk.weixin.senparc.com/";
 
+            string strTemplateId = Config.GetTempaleteMessageBag(Config.AppId, "课程进度通知").MessageId;
+
+             
+            // 构建模板消息内容
+            var templateContent = new TemplateItem
+            {
+                first = new TemplateDataItem( "您的课程已经完成80%了奥,", "#FF0000")  ,
+                keyword1 = new TemplateDataItem("微信公众号开发") ,
+                keyword2 = new TemplateDataItem("学习进行中") ,
+                keyword3 = new TemplateDataItem("80 % ") ,
+                remark = new TemplateDataItem("加油加油！") 
+            };
+
+            var sendReuslt = Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessage(Config.AppId, openId, strTemplateId, strUrl, templateContent, null);
+
+            return Content("模板消息发送结果：" + sendReuslt.ToJson());
+        }
 
     }
 }
