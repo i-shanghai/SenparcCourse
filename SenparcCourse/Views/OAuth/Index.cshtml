@@ -6,5 +6,11 @@
 
 <h2>Index</h2>
 
-<a href="@Model">打开OAuth2 认证授权页面</a>
+<a href="@Model">打开OAuth2 认证授权页面</a> 
+
+<br />
+<a class="btn btn-primary btn-lg" href="@ViewData["LoginUrl"]">点击登陆</a>
+<br/>
+<p>当前登陆登陆状态：@ViewData["IsLogined"]</p>
+<p>当前登陆登陆用户：@ViewData["UserLoginId"]</p>
 
