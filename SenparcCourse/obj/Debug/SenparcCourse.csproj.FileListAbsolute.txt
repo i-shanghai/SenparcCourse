@@ -120,3 +120,4 @@ D:\06_Learning\SenparcCourse\SenparcCourse\bin\StackExchange.Redis.xml
 D:\06_Learning\SenparcCourse\SenparcCourse\bin\SenparcCourse.Service.dll.config
 D:\06_Learning\SenparcCourse\SenparcCourse\bin\BinaryFormatter.dll
 D:\06_Learning\SenparcCourse\SenparcCourse\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\06_Learning\SenparcCourse\SenparcCourse\obj\Debug\SenparcCourse.csproj.CopyComplete

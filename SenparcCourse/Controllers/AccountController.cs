@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Senparc.Weixin.MP.MvcExtension;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
+using Senparc.Weixin.HttpUtility;
+using Senparc.Weixin.MP;
+using SenparcCourse.Filters;
+using SenparcCourse.Service;
 
 namespace SenparcCourse.Controllers
 {
@@ -34,5 +40,16 @@ namespace SenparcCourse.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 借助SenparcOAuthAttribute实现 登陆认证功能
+        /// "/OAuth/Login?redirectUrl='http://physicalchina.club/OAuth/Index'&msg=index3"
+        /// </summary>
+        /// <returns></returns>
+        [CustomOAuth(null, "/OAuth/CallBackNew", Senparc.Weixin.MP.OAuthScope.snsapi_base)]
+        public ActionResult Index3()
+        { 
+            ViewData["Msg"] = "您已经登陆，用户名：" + User.Identity.Name;
+            return View();
+        } 
     }
 }

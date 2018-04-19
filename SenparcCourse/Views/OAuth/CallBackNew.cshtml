@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "SenparcOAuth2认证完成";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SenparcOAuth 认证以后的CallBack 页面</h2>
+
+<h4>从页面："@ViewData["Msg"]" 认证完成后跳转过来的</h4>
+<h5>认证完成以后的Code: @ViewData["Code"]</h5>
+<h5>Form登陆： @ViewData["isLogined"]</h5>
+
+<p>昵称：@Model.nickname</p>
+<p>性别：@Model.sex</p>
+<p>城市：@Model.city</p>
+<p>OpenId：@Model.openid</p>
+<p><img src="@Model.headimgurl" alt="PhotoImage" style="width: 100px;height:100px" /></p>

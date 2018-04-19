@@ -120,6 +120,66 @@ namespace SenparcCourse.Controllers
             }
         }
 
+
+        /// <summary>
+        /// 从官方授权页面接受回调信息，并根据code进一步获取用户基本信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <param name="returnUrl">, string returnUrl</param>
+        /// <returns></returns>
+        public ActionResult CallBackNew(string code, string state, string redirectUrl, string msg)
+        {
+            //没有Code
+            if (string.IsNullOrEmpty(code))
+            {
+                return Content("用户拒绝授权");
+            }
+             
+            OAuthAccessTokenResult oauthResult = null;
+            try
+            {
+                oauthResult = Senparc.Weixin.MP.AdvancedAPIs.OAuthApi.GetAccessToken(Config.AppId, Config.AppSecret, code);
+            }
+            catch (ErrorJsonResultException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            var oauthAccessToken = oauthResult.access_token;
+            var openId = oauthResult.openid;
+
+            //关注以后，才能获取到
+            //var userInfo = UserApi.Info(Config.AppId, openId);
+
+            //根据授权以后的AccessToken和OpendId来获取UserInfo
+            OAuthUserInfo userInfo = OAuthApi.GetUserInfo(oauthAccessToken, openId);
+
+            //微信服务器的OAuth2认证已经完成，可以进行其他的业务逻辑了，如认证登陆
+            //openId 作为Cookie返回
+            //Response.Cookies.Add(new HttpCookie("loginid",userInfo.openid));
+
+            //OAuth2成功以后，借助ASP.NET Form实现登陆功能
+            //可以通过：User.Identity.IsAuthenticated , User.Identity.Name获取登陆信息
+            System.Web.Security.FormsAuthentication.SetAuthCookie(userInfo.openid, false);
+             
+            ViewData["Msg"] = msg;
+            ViewData["Code"] = code;
+
+            ViewData["isLogined"] = User.Identity.IsAuthenticated;
+
+            if (string.IsNullOrEmpty(redirectUrl) == false)
+            {
+                //再次跳转到 OAuth2认证前的页面
+                return Redirect(redirectUrl);
+            }
+            else
+            {
+                return View(userInfo);
+            }
+        }
+
         /// <summary>
         /// 退出登陆以后，跳转到Index
         /// </summary>
