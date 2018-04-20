@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JSSDKController.cs" />
     <Compile Include="Controllers\OAuthBaseController.cs" />
     <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -180,6 +181,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewData\JSSDKVD.cs" />
+    <Compile Include="Models\ViewData\OAuthBaseVD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,10 +228,11 @@
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Index3.cshtml" />
     <Content Include="Views\OAuth\CallBackNew.cshtml" />
+    <Content Include="Views\JSSDK\Index.cshtml" />
+    <Content Include="Views\Shared\_JSSDKLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\OAuthBase\" />
     <Folder Include="Views\Request\" />
   </ItemGroup>

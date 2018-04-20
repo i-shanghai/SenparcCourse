@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_JSSDKLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+ViewModl -> OAuthBaseVD -> OAuthBaseController
+
+<p>AbsolutePath is @ViewData["AbsolutePath"]</p>
+<p>AbsoluteUri is @ViewData["AbsoluteUri"]</p>
+
+<p>UserName: @Model.UserName</p>
+<p>PageRenderTime: @Model.PageRenderTime</p>
+<p>NonceStr: @Model.JsSdkUiPackage.NonceStr</p>
+<p>Timestamp: @Model.JsSdkUiPackage.Timestamp</p>
+
+
+

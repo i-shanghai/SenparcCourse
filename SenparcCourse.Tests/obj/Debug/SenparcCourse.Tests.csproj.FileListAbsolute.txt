@@ -110,3 +110,4 @@ D:\06_Learning\SenparcCourse\SenparcCourse.Tests\bin\Debug\Senparc.Weixin.Cache.
 D:\06_Learning\SenparcCourse\SenparcCourse.Tests\bin\Debug\SenparcCourse.Service.dll.config
 D:\06_Learning\SenparcCourse\SenparcCourse.Tests\bin\Debug\StackExchange.Redis.xml
 D:\06_Learning\SenparcCourse\SenparcCourse.Tests\bin\Debug\Senparc.Weixin.Cache.Redis.RedLock.xml
+D:\06_Learning\SenparcCourse\SenparcCourse.Tests\obj\Debug\SenparcCourse.Tests.csproj.CopyComplete
