@@ -12,16 +12,16 @@ using SenparcCourse.Service;
 
 namespace SenparcCourse.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : OAuthBaseController
     {
         // GET: Account
         public ActionResult Index()
         {
-            //如果没有Form认证，则直接跳转到认证页面
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "OAuth", new { redirectUrl = Request.Url.PathAndQuery });
-            }
+            ////如果没有Form认证，则直接跳转到认证页面
+            //if (!User.Identity.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Login", "OAuth", new { redirectUrl = Request.Url.PathAndQuery });
+            //}
 
             ViewData["Msg"] = "您已经登陆，用户名："+User.Identity.Name;
 
@@ -30,11 +30,11 @@ namespace SenparcCourse.Controllers
 
         public ActionResult Index2()
         { 
-            //如果没有Form认证，则直接跳转到认证页面
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "OAuth", new { redirectUrl = Request.Url.PathAndQuery });
-            }
+            ////如果没有Form认证，则直接跳转到认证页面
+            //if (!User.Identity.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Login", "OAuth", new { redirectUrl = Request.Url.PathAndQuery });
+            //}
             ViewData["Msg"] = "您已经登陆，用户名：" + User.Identity.Name;
 
             return View();
@@ -45,7 +45,7 @@ namespace SenparcCourse.Controllers
         /// "/OAuth/Login?redirectUrl='http://physicalchina.club/OAuth/Index'&msg=index3"
         /// </summary>
         /// <returns></returns>
-        [CustomOAuth(null, "/OAuth/CallBackNew", Senparc.Weixin.MP.OAuthScope.snsapi_base)]
+        //[CustomOAuth(null, "/OAuth/CallBackNew", Senparc.Weixin.MP.OAuthScope.snsapi_base)]
         public ActionResult Index3()
         { 
             ViewData["Msg"] = "您已经登陆，用户名：" + User.Identity.Name;
