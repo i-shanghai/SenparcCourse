@@ -50,8 +50,7 @@ namespace SenparcCourse
             {
                 //启用Redis缓存 配置
                 CacheStrategyFactory.RegisterObjectCacheStrategy(() => RedisObjectCacheStrategy.Instance);
-            }
-
+            } 
             #endregion
         }
 

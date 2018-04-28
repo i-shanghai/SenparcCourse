@@ -23,6 +23,9 @@ namespace SenparcCourse.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            //Senparc.Weixin.MP.Containers.AccessTokenContainer.GetAccessToken(Config.AppId);
+
+
             return View();
         }
 
@@ -60,7 +63,9 @@ namespace SenparcCourse.Controllers
 
                 Count = count + 1; //设置 Count
 
-                return Content(Count.ToString());
+                string strJsToken = Senparc.Weixin.MP.Containers.AccessTokenContainer.GetAccessToken(Config.AppId,true);
+
+                return Content(Count.ToString() + " " + strJsToken);
             }
         }
 
