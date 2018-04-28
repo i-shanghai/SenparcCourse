@@ -48,8 +48,10 @@ namespace SenparcCourse.Controllers
         /// <returns></returns>
         public ActionResult LockTest()
         {
-            //Lock 实现 独占、锁住
+            //Lock 实现 独占、锁住；解决数据冲突的问题
             var strategy = CacheStrategyFactory.GetObjectCacheStrategyInstance();
+
+            //Lock 可以存放在本地，也可以存放在缓存中
             using (strategy.BeginCacheLock("SenparcCourse", "LockTest"))
             {
                 var count = Count; //读取 Count 

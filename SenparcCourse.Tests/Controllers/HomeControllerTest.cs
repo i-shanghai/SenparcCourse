@@ -55,12 +55,14 @@ namespace SenparcCourse.Tests.Controllers
         [TestMethod]
         public void LockTest()
         {
+            //启动100个thread 
             for (int i = 0; i < TotalThreadCount; i++)
             {
                 var thread = new Thread(RunSingleLockTest);
                 thread.Start();
             }
 
+            //等待100次的线程执行完成（每次执行完毕 FinishedThreadCount + 1）
             while (FinishedThreadCount < TotalThreadCount)
             {
                 //等待100次的线程执行完成
@@ -70,6 +72,9 @@ namespace SenparcCourse.Tests.Controllers
             Console.WriteLine("测试完成，线程总数：" + FinishedThreadCount.ToString());
         }
 
+        /// <summary>
+        /// Single Function
+        /// </summary>
         public void RunSingleLockTest()
         {
             // Arrange

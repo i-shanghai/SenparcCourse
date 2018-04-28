@@ -54,7 +54,7 @@ namespace SenparcCourse.Service
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
             //获取关注人员信息  
-            //var accessToken = AccessTokenContainer.GetAccessToken(Config.AppId);
+            // var accessToken = AccessTokenContainer.GetAccessToken(Config.AppId);
             var userInfo = Senparc.Weixin.MP.AdvancedAPIs.UserApi.Info(Config.AppId, base.WeixinOpenId);
             var nickName = userInfo.nickname;
             var title = userInfo.sex == 1 ? "先生" : (userInfo.sex == 0 ? "女士" : "");
