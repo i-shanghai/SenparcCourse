@@ -244,6 +244,7 @@ namespace SenparcCourse.Controllers
 
             #region 发送模板消息，方法1
             //string strTemplateId = Config.GetTempaleteMessageBag(Config.AppId, "课程进度通知").MessageId;
+
             //// 构建模板消息内容
             //var templateContent = new TemplateItem
             //{

@@ -63,9 +63,19 @@ namespace SenparcCourse.Controllers
 
                 Count = count + 1; //设置 Count
 
-                string strJsToken = Senparc.Weixin.MP.Containers.AccessTokenContainer.GetAccessToken(Config.AppId,true);
+                //string strJsToken = Senparc.Weixin.MP.Containers.AccessTokenContainer.GetAccessToken(Config.AppId);
+                string accessToken = Senparc.Weixin.MP.Containers.AccessTokenContainer.GetAccessToken(Config.AppId);
 
-                return Content(Count.ToString() + " " + strJsToken);
+                string openId = "oifDGvmdSfltOJPL2QSuCdEIN0io";
+                string username = Senparc.Weixin.MP.AdvancedAPIs.UserApi.Info(accessToken, openId).nickname;
+                 
+                int num = Senparc.Weixin.MP.AdvancedAPIs.UserApi.Get(accessToken, null).total;
+
+                //int numToday = Senparc.Weixin.MP.AdvancedAPIs.AnalysisApi.
+
+                 //var dd= Senparc.Weixin.MP.AdvancedAPIs.AnalysisApi.GetUserSummary(accessToken, "2018-04-26", "2018-04-28");
+
+                return Content(Count.ToString() + " 关注人数" );
             }
         }
 
